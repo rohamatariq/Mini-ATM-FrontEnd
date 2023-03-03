@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Change pin</title>
+</head>
+<body>
+<div id="main">
+	<label>Enter current PIN</label>
+	<input type="password" id="pass">
+	<button onclick="check()">Submit</button>
+</div>
+
+<div id="new" style="display: none;">
+	<label>Enter new PIN</label>
+	<input  type="password" id="newpass" >
+	<label>Confirm new PIN</label>
+	<input type="password" id="newpass2">
+	<button onclick="savePin()">Save</button>
+	<button onclick="display()"></button>
+</div>
+</body>
+<script type="text/javascript" src="sweetalrt.js"></script>
+<script type="text/javascript">
+	var pin = '123';
+	function check() {
+		var pass = document.getElementById("pass").value;
+		console.log(pin);
+		if(pass!=pin){
+			Swal.fire({
+			  icon: 'error',
+			  title: 'Request Failed!',
+			  text: 'You have entered incorrect pin'
+			})
+		}
+		else if(pass==pin){
+			document.getElementById("new").style.cssText = "display:inline-block;";
+			document.getElementById("main").style.cssText = "display:none;";
+		}
+	}
+	function savePin() {
+		var newpass = document.getElementById("newpass").value;
+		var newpass2 = document.getElementById("newpass2").value;
+		if(newpass==newpass2){	
+			pin = newpass;
+			console.log(pin);
+		Swal.fire({
+			  icon: 'success',
+			  title: 'Your PIN has been changed!',
+			  text: 'Your new PIN is : '+pin
+			})
+
+		}
+		else{
+			Swal.fire({
+			  icon: 'error',
+			  title: "PIN Mismatch!"
+			})
+		}
+		}
+</script>
+
+</html>

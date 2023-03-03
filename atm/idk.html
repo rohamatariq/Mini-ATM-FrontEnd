@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="atm.css">
+	
+</head>
+<body id="body" style="background-image: url('white-atm-automated-teller-machine-footage-145919868_iconl.jpeg');background-repeat: no-repeat;background-position: center;background-size: cover;">
+<div id="main" >
+	<div class="select" >
+		<select id="card">
+			<option value="" disabled selected>Select payment method</option>
+			<option>Credit Card</option>
+			<option>Debit Card</option>
+			<option>Master Card</option>
+		</select>
+	</div>
+	<div class="pass">
+		<input id="pass" type="password" name="pass">
+	</div>
+	<div class="butt">
+	<button id="submit" onclick="submit()">Submit</button>
+	<button  onclick="location.reload()" id="clr">Clear</button>
+	</div>
+</div>
+<!--SELECT ACTION-->
+<div id="sel" style="display: none;">
+		<div >
+			<button onclick='chooseCateg(this.value)' value="0">Fast Cash</button>
+			<button onclick='chooseCateg(this.value)' value="1">Bill Payment</button>
+		</div>
+		<div>
+			<button onclick='chooseCateg(this.value)' value="2">Balance Inquiry</button>
+			<button onclick='chooseCateg(this.value)' value="3">Account Balance</button>
+		</div>
+		<div>
+			<button onclick='chooseCateg(this.value)' value="4">Change PIN</button>
+			<button onclick='chooseCateg(this.value)'value="5">Exit</button>
+		</div>
+	</div>
+<button id="back" onclick="back()" style="display:none;"> < Back </button>
+<!--FAST CASH-->
+<div id="fc" style="display:none;">
+	
+		<div>
+			<button onclick='disp(value)' value="5000">5000</button>
+			<button onclick='disp(value)' value="10000">10000</button>
+		</div>
+		<div>
+			<button onclick='disp(value)' value="20000">20000</button>
+			<button onclick='disp(value)' value="25000">25000</button>
+		</div>
+		<div>
+			<button onclick='disp(value)' value="50000">30000</button>
+			<button onclick='disp(value)' value="30000">50000</button>
+			</div>
+
+</div>
+
+<!--BILL PAYMENT-->
+<div id="bill" style="display:none;">
+	<div>
+		<select onchange="autoFill(this.value)">
+			<option disabled selected>Bill Payment</option>
+			<option  value="elec">Electricity</option>
+			<option  value="sf">Storm Fiber</option>
+			<option  value="gas">Gas</option>
+			<option  value="cbl">Cable</option>
+		</select>
+	</div>
+	<div>
+		<input type="text" id="fill">
+
+	</div>
+	<div>
+	<button id="ok" onclick="alr()">OK</button>
+	</div>
+</div>
+<!--CHANGE PIN-->
+<div id="pins" style="display:none;">
+	<label>Enter current PIN</label>
+	<input type="password" id="pass1">
+	<button onclick="check()">Submit</button>
+</div>
+
+<div id="newpins" style="display: none;">
+	<label>Enter new PIN</label>
+	<input  type="password" id="newpass" >
+	<label>Confirm new PIN</label>
+	<input type="password" id="newpass2">
+	<button onclick="savePin()">Save</button>
+	
+</div>
+</body>
+<script type="text/javascript" src="sweetalrt.js"></script>
+<script type="text/javascript">
+	var accountBal = 100000;
+	var pin = '123';
+	function submit() {
+		var pass= document.getElementById('pass').value;
+		if(pass==pin){
+			
+			document.getElementById("main").style.cssText = "display:none;";
+			document.getElementById("sel").style.cssText = "display:flex;";
+		}
+		else{
+			Swal.fire({
+			icon: "error",
+			title:"Incorrect PIN",
+		
+		});
+		}
+	}
+	bval = '';
+	//SELECT ACTION
+	function chooseCateg(value){
+		let choice = value;
+		document.getElementById("sel").style.cssText = "display:none;";
+		document.getElementById("back").style.cssText = "display:inline-block;";
+		switch(choice){
+			case "0": 
+				document.getElementById("fc").style.cssText = "display:inline-block;";
+				bval = 'fc';
+				break;
+			case "1":
+				document.getElementById("bill").style.cssText = "display:inline-block;";
+				bval = 'bill';
+				break;
+			case "3":
+			case "4":
+				document.getElementById("pins").style.cssText = "display:inline-block;";
+				bval = 'pins';
+				break;
+			case "5":
+				document.getElementById("main").style.cssText = "display:inline-block;";
+				document.getElementById("back").style.cssText = "display:none;";
+				break;
+
+				
+		}
+	}
+	function back() {
+		document.getElementById(bval).style.cssText = "display:none;";
+		document.getElementById("sel").style.cssText = "display:flex;";
+		document.getElementById("back").style.cssText = "display:none;";
+		document.getElementById("newpins").style.cssText = "display:none;";
+
+	}
+	//FAST CASH
+	function disp(value){
+		var amount = value;
+		accountBal = accountBal - parseInt(amount);
+	Swal.fire({
+			  icon: 'success',
+			  title: 'Your transaction is complete!',
+			  text: 'You have withdrawn Rs.'+amount+' from your account and balance is '+accountBal,
+			})
+
+	}	
+	
+	//BILL PAYMENT
+	function autoFill(value){
+		var val = value;
+		console.log(val)
+		if(val=='elec'){
+			document.getElementById("fill").value = '25000';
+			accountBal = accountBal - 25000;
+		}
+		else if(val=='sf'){
+			document.getElementById("fill").value = '2000';
+			accountBal = accountBal - 2000;
+		}
+		else if (val =='gas') {
+			document.getElementById("fill").value = '1000';	
+			accountBal = accountBal - 1000;
+		}
+		else{
+			document.getElementById("fill").value = '3000';	
+			accountBal = accountBal - 3000;
+		}
+	}
+	function alr(){
+		Swal.fire({
+			icon: "success",
+			title:"Successful Transaction!",
+			text:"Your Bill Payment is Complete."
+		});
+	}
+	
+	function check() {
+		var pass1 = document.getElementById("pass1").value;
+		console.log(pin);
+		if(pass1!=pin){
+			Swal.fire({
+			  icon: 'error',
+			  title: 'Request Failed!',
+			  text: 'You have entered incorrect pin'
+			})
+		}
+		else if(pass1==pin){
+			document.getElementById("newpins").style.cssText = "display:inline-block;";
+			document.getElementById("pins").style.cssText = "display:none;";
+		}
+	}
+	function savePin() {
+		var newpass = document.getElementById("newpass").value;
+		var newpass2 = document.getElementById("newpass2").value;
+		if(newpass==newpass2){	
+			pin = newpass;
+			console.log(pin);
+		Swal.fire({
+			  icon: 'success',
+			  title: 'Your PIN has been changed!',
+			  text: 'Your new PIN is : '+pin
+			})
+
+		}
+		else{
+			Swal.fire({
+			  icon: 'error',
+			  title: "PIN Mismatch!"
+			})
+		}
+		}
+</script>
+
+</html>

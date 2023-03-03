@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<style type="text/css">
+		.main{
+			border: 1px solid black;
+		}
+	</style>
+</head>
+<body>
+<div class="main">
+	<div>
+		<select id="card">
+			<option value="" disabled selected>Select payment method</option>
+			<option>Credit</option>
+			<option>Debit</option>
+			<option>Master</option>
+		</select>
+	</div>
+	<div>
+		<input id="pass" type="password" name="pass">
+	</div>
+	<div>
+	<button id="submit" onclick="submit()">Submit</button>
+	<button  onclick="location.reload()" id="clr">Clear</button>
+	</div>
+</div>
+
+
+</body>
+<script type="text/javascript">
+	function submit() {
+		var pass= document.getElementById('pass').value;
+		if(pass=='123'){
+			window.open("select.html","_self")
+		}
+	}
+</script>
+</html>

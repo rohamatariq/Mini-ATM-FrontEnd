@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>FAST CASH</title>
+</head>
+<body>
+	<div id="fc">
+		<div>
+			<button onclick='disp(value)' value="5000">5000</button>
+			<button onclick='disp(value)' value="10000">10000</button>
+		</div>
+		<div>
+			<button onclick='disp(value)' value="20000">20000</button>
+			<button onclick='disp(value)' value="25000">25000</button>
+		</div>
+		<div>
+			<button onclick='disp(value)' value="50000">30000</button>
+			<button onclick='disp(value)' value="30000">50000</button>
+			</div>
+	</div>
+</body>
+<script type="text/javascript" src="sweetalrt.js"></script>
+<script type="text/javascript">
+	function disp(value){
+		var amount = value;
+	Swal.fire({
+			  icon: 'success',
+			  title: 'Your transaction is complete!',
+			  text: 'You have withdrawn Rs.'+amount+' from your account',
+			})
+}
+</script>
+</html>

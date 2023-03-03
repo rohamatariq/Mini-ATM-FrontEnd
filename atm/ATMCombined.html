@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="atm.css">
+	
+</head>
+<body id="body" style="background-image: url('white-atm-automated-teller-machine-footage-145919868_iconl.jpeg');background-repeat: no-repeat;background-position: center;background-size: cover;">
+<div id="main" >
+	<div class="select" >
+		<select id="card">
+			<option value="" disabled selected>Select payment method</option>
+			<option>Credit Card</option>
+			<option>Debit Card</option>
+			<option>Master Card</option>
+		</select>
+	</div>
+	<div class="pass">
+		<input id="pass" type="password" name="pass">
+	</div>
+	<div class="butt">
+	<button id="submit" onclick="submit()">Submit</button>
+	<button  onclick="location.reload()" id="clr">Clear</button>
+	</div>
+</div>
+<!--SELECT ACTION-->
+<div id="sel" style="display: none;">
+		<div >
+			<button onclick='chooseCateg(this.value)' value="0">Fast Cash</button>
+			<button onclick='chooseCateg(this.value)' value="1">Bill Payment</button>
+		</div>
+		<div>
+			<button onclick='chooseCateg(this.value)' value="2">Transfer Cash</button>
+			<button onclick='chooseCateg(this.value)' value="3">Account Balance</button>
+		</div>
+		<div>
+			<button onclick='chooseCateg(this.value)' value="4">Change PIN</button>
+			<button onclick='chooseCateg(this.value)'value="5">Exit</button>
+		</div>
+	</div>
+<button id="back" onclick="back()" style="display:none;"><img src="back.png" align="left"><p>Back</p> </button>
+
+<!--FAST CASH-->
+<div id="fc" style="display:none;">
+	
+		<div>
+			<button onclick='disp(value)' value="5000">Rs.5,000</button>
+			<button onclick='disp(value)' value="10000">Rs.10,000</button>
+		</div>
+		<div>
+			<button onclick='disp(value)' value="20000">Rs.20,000</button>
+			<button onclick='disp(value)' value="25000">Rs.25,000</button>
+		</div>
+		<div>
+			<button onclick='disp(value)' value="50000">Rs.30,000</button>
+			<button onclick='disp(value)' value="30000">Rs.50,000</button>
+			</div>
+
+</div>
+
+<!--BILL PAYMENT-->
+<div id="bill" style="display:none;">
+	<div >
+		<select class="bilcls"onchange="autoFill(this.value)">
+			<option disabled selected>Bill Payment</option>
+			<option  id="elec" value="elec">Electricity</option>
+			<option  id="sf" value="sf">Storm Fiber</option>
+			<option id="gas" value="gas">Gas</option>
+			<option  id="cbl" value="cbl">Cable</option>
+		</select>
+	</div>
+	<div >
+		<input class="bilcls" type="text" id="fill">
+
+	</div>
+	<div>
+	<button id="ok" onclick="alr(value)">Pay</button>
+	</div>
+</div>
+<!--CHANGE PIN-->
+<div id="pins" style="display:none;" align="center">
+	
+	<div><label><u> Current PIN</u><br></label><br>
+	<input type="password" id="pass1" placeholder="Enter your current PIN"><br>
+	<button onclick="check()">Submit</button>
+	</div>
+</div>
+
+<div id="newpins" style="display: none;" align="center">
+	<label>Enter new PIN</label><br>
+	<input  type="password" id="newpass" ><br>
+	<label>Confirm new PIN</label><br>
+	<input type="password" id="newpass2"><br>
+	<button onclick="savePin()">Save</button>
+	
+</div>
+
+<div id="bal" style="display: none;">
+	<p id="balp"> </p>
+</div>
+<!--CASH TRANSFER-->
+<div id="cashTrans" style="display:none;">
+	<select id="inbank" onchange="inOut(this.value)">
+		<option>Choose option</option>
+		<option value="0">Within Bank</option>
+		<option value="1">Other Bank</option>
+	</select>
+	<select id="loc" onchange="getLoc(this.value)" style="display:none;">
+		<option>Choose option</option>
+		<option value="2">Local</option>
+		<option value="1">International</option>
+	</select>
+	<button class="nxt"  style="display:none;" id="next1" onclick="chooseBank()" disabled>Next1</button>
+	<div style="display:none;" id="bnkloc"><p><u>Choose the required Bank</u></p>
+		<button onclick="enterInfo()">National Bank Of Pakistan</button>
+		<button onclick="enterInfo()">Habib Bank Limited (HBL)</button>
+		<button onclick="enterInfo()">Meezan Bank</button>
+		<button onclick="enterInfo()">Bank Alfalah</button>
+		<button onclick="enterInfo()">United Bank Limited</button>
+		<button onclick="enterInfo()">MCB Bank</button>
+		
+	</div>
+	<div style="display:none;" id="bankint"><p><u>Choose the required Bank</u></p>
+		<button onclick="enterInfo()">Mitsubishi UFJ Financial Group</button>
+		<button onclick="enterInfo()">J.P. Morgan Chase</button>
+		<button onclick="enterInfo()">HSBC Holdings </button>
+		<button onclick="enterInfo()">BNP Paribas</button>
+		<button onclick="enterInfo()">Wells Fargo</button>
+		<button onclick="enterInfo()">ICBC</button>
+		
+	</div>
+	<button style="display: none; "class="nxt" id="next2" onclick="enterInfo()">Next2</button>
+	<div id="info" style="display:none;">
+		<label>Account Detail</label>
+		<input type="text" id ="accno" name="accno" placeholder="Enter account number" required>
+		<label>Enter cash amount to transfer</label>
+		<input type="text" id="transamount" name="transamount" placeholder="Enter amount" required>
+		<button onclick="transProcess()">Next</button>
+	</div>
+	<div style="display:none;" id="show">
+		<p>ACCOUNT DETAILS</p>
+		<p>Account name: Ali</p>
+		<p id="showp"></p>
+		<p id="showp2"></p>
+		<button onclick="confirm()">Confirm</button>
+	</div>
+</div>
+</body>
+<script type="text/javascript" src="sweetalrt.js"></script>
+<script type="text/javascript">
+	var accountBal = 100000;
+	var pin = '123';
+	function submit() {
+		var pass= document.getElementById('pass').value;
+		if(pass==pin){
+			
+			document.getElementById("main").style.cssText = "display:none;";
+			document.getElementById("sel").style.cssText = "display:flex;";
+		}
+		else{
+			Swal.fire({
+			icon: "error",
+			title:"Incorrect PIN",
+		
+		});
+		}
+	}
+	bval = '';
+	//SELECT ACTION
+	function chooseCateg(value){
+		let choice = value;
+		document.getElementById("sel").style.cssText = "display:none;";
+		document.getElementById("back").style.cssText = "display:inline-block;";
+		switch(choice){
+			case "0": 
+				document.getElementById("fc").style.cssText = "display:flex;";
+				bval = 'fc';
+				break;
+			case "1":
+				document.getElementById("bill").style.cssText = "display:inline-block;";
+				bval = 'bill';
+				break;
+			case "2":
+				document.getElementById("cashTrans").style.cssText = "display:inline-block;";
+				document.getElementById("inbank").style.cssText = "display:inline-block;";
+				document.getElementById("next1").style.cssText = "display:inline-block;";
+					bval = 'cashTrans';
+				break;
+			case "3":
+				document.getElementById("bal").style.cssText = "display:inline-block;";
+				document.getElementById("pins").style.cssText = "display:none;";
+				document.getElementById("balp").innerHTML = 'Your Current Account Balance is: '+accountBal;
+				bval = 'bal';
+				break;
+			case "4":
+				document.getElementById("pins").style.cssText = "display:inline-block;";
+				bval = 'pins';
+				break;
+			case "5":
+				document.getElementById("main").style.cssText = "display:inline-block;";
+				document.getElementById("back").style.cssText = "display:none;";
+				break;
+
+				
+		}
+	}
+	function back() {
+		document.getElementById(bval).style.cssText = "display:none;";
+		document.getElementById("sel").style.cssText = "display:flex;";
+		document.getElementById("back").style.cssText = "display:none;";
+		document.getElementById("newpins").style.cssText = "display:none;";
+
+	}
+
+	//FAST CASH
+	function disp(value){
+		var amount = value;
+		accountBal = accountBal - parseInt(amount);
+	Swal.fire({
+			  icon: 'success',
+			  title: 'Your transaction is complete!',
+			  text: 'You have withdrawn Rs.'+amount+' from your account and balance is '+accountBal,
+			})
+
+	}	
+	
+	
+	//BILL PAYMENT
+	function autoFill(value){
+
+		var	val = value;
+		console.log(val)
+		if(val=='elec'){
+			document.getElementById("fill").value = '25000';
+			
+		}
+		else if(val=='sf'){
+			document.getElementById("fill").value = '2000';
+		
+		}
+		else if (val =='gas') {
+			document.getElementById("fill").value = '1000';	
+			
+		}
+		else{
+			document.getElementById("fill").value = '3000';	
+			
+		}
+	}
+	function alr()
+	{	var bill =document.getElementById("fill").value;
+		if(bill==25000){
+			 document.getElementById("elec").setAttribute("disabled", "disabled");
+			 accountBal = accountBal - 25000;
+		}
+		else if(bill==2000){
+		
+			accountBal = accountBal - 2000;
+			document.getElementById("sf").setAttribute("disabled", "disabled");
+		}
+		else if (bill==1000) {
+			
+			document.getElementById("gas").setAttribute("disabled", "disabled");
+			accountBal = accountBal - 1000;
+		}
+		else{
+			
+			document.getElementById("cbl").setAttribute("disabled", "disabled");
+			accountBal = accountBal - 3000;
+		}
+		
+		Swal.fire({
+
+			icon: "success",
+			title:"Successful Transaction!",
+			text:"Your Bill Payment of Rs: "+bill+" is Complete. Current Balance : "+accountBal,
+		});
+	}
+	
+	function check() {
+		var pass1 = document.getElementById("pass1").value;
+		console.log(pin);
+		if(pass1!=pin){
+			Swal.fire({
+			  icon: 'error',
+			  title: 'Request Failed!',
+			  text: 'You have entered incorrect pin'
+			})
+		}
+		else if(pass1==pin){
+			document.getElementById("newpins").style.cssText = "display:inline-block;";
+			document.getElementById("pins").style.cssText = "display:none;";
+		}
+	}
+	function savePin() {
+		var newpass = document.getElementById("newpass").value;
+		var newpass2 = document.getElementById("newpass2").value;
+		if(newpass==newpass2){	
+			pin = newpass;
+			console.log(pin);
+		Swal.fire({
+			  icon: 'success',
+			  title: 'Your PIN has been changed!',
+			  text: 'Your new PIN is : '+pin
+			})
+
+		}
+		else{
+			Swal.fire({
+			  icon: 'error',
+			  title: "PIN Mismatch!"
+			})
+		}
+		}
+
+	
+function inOut(value){
+	var inbnk = value;
+	if(inbnk =="0"){
+		document.getElementById("next1").style.cssText="display: none;";
+		document.getElementById("next2").style.cssText="display: inline-block;";
+	}
+	else if(inbnk=="1"){
+		document.getElementById("loc").style.cssText="display: inline-block;";
+		document.getElementById("next1").disabled=false;
+		
+	}
+}
+var loc;
+function getLoc(value){
+	  loc = value;
+}
+function chooseBank(){
+	 document.getElementById("loc").style.cssText="display: none;"
+	 document.getElementById("inbank").style.cssText="display: none;"
+	document.getElementById("next1").style.cssText="display: none;";
+		if(loc=="2"){
+
+			document.getElementById("bnkloc").style.cssText="display: inline-block;";	
+		
+		}
+		else if(loc=="1"){
+			document.getElementById("bankint").style.cssText="display: inline-block;";	
+			
+		}
+		
+		document.getElementById("next2").style.cssText="display: none;";
+	
+
+}
+function enterInfo(){
+	document.getElementById("inbank").style.cssText="display: none;"
+		document.getElementById("next2").style.cssText="display: none;";
+
+	document.getElementById("info").style.cssText="display: inline-block;";
+	document.getElementById("bnkloc").style.cssText="display: none;";
+	document.getElementById("bankint").style.cssText="display: none;";
+}
+var accno;
+var transamount;
+function transProcess(){
+	 accno = document.getElementById("accno").value;
+	 transamount = document.getElementById("transamount").value;
+	document.getElementById("info").style.cssText="display:none;";
+	document.getElementById("show").style.cssText="display: inline-block;";
+	document.getElementById("showp").innerHTML = "Account Number : "+accno;
+	document.getElementById("showp2").innerHTML = "Amount to be transferred : "+transamount;
+
+
+}
+function confirm(){
+	accountBal = accountBal - parseInt(transamount);
+
+	Swal.fire({
+			  icon: 'success',
+			  title: 'Transfer Successful!',
+			  text: 'You have transferred Rs.'+transamount+' from your account and balance is '+accountBal,
+			})
+
+	
+}
+</script>
+
+</html>

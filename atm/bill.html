@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+</head>
+<body>
+<div class="bill">
+	<div>
+		<select onchange="autoFill(this.value)">
+			<option disabled selected>Bill Payment</option>
+			<option  value="elec">Electricity</option>
+			<option  value="sf">Storm Fiber</option>
+			<option  value="gas">Gas</option>
+			<option  value="cbl">Cable</option>
+		</select>
+	</div>
+	<div>
+		<input type="text" id="fill">
+
+	</div>
+	<div>
+	<button id="ok" onclick="alr()">OK</button>
+	</div>
+</div>
+</body>
+<script type="text/javascript" src="sweetalrt.js"></script>
+<script type="text/javascript">
+	function autoFill(value){
+		var val = value;
+		console.log(val)
+		if(val=='elec'){
+			document.getElementById("fill").value = '25000';
+		}
+		else if(val=='sf'){
+			document.getElementById("fill").value = '2000';
+		}
+		else if (val =='gas') {
+			document.getElementById("fill").value = '1000';	
+		}
+		else{
+			document.getElementById("fill").value = '3000';	
+		}
+	}
+	function alr(){
+		Swal.fire({
+			icon: "success",
+			title:"Successful Transaction!",
+			text:"Your Bill Payment is Complete."
+		});
+	}
+</script>
+</html>
